@@ -5,7 +5,6 @@ import os
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
-from email import encoders
 
 # Variables 
 
@@ -17,7 +16,6 @@ mail_subject = "Daily Documents"
 mail_body = "Auto email for the delivery of documents only. Please do not reply to this address."
 dir_path = "./"
 files = ["test.txt", "test2.txt"]
-mail_attachment_names = ["test", "test2"]
 
 # Building email
 
