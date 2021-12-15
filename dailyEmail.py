@@ -1,17 +1,25 @@
+# Imports
+
 import smtplib
-from email.mime.multipart import MIMEMultipart
+import os
 from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
+from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
 from email import encoders
+
+# Variables 
 
 username = "auto@belfieldhomeandleisure.co.uk"
 password = "I1f7UEmx2B*KEx&cjY0YBQx#A@xQrT"
 mail_from = "auto@belfieldhomeandleisure.co.uk"
 mail_to = "matt.jones@stability-it.com"
-mail_subject = "Test Subject"
-mail_body = "This is a test message"
-mail_attachment= "c:\Users\matt.jones\Desktop\test.txt"
-mail_attachment_name= "test.txt"
+mail_subject = "Daily Documents"
+mail_body = "Auto email for the delivery of documents only. Please do not reply to this address."
+dir_path = "./"
+files = ["test.txt", "test2.txt"]
+mail_attachment_names = ["test", "test2"]
+
+# Building email
 
 mimemsg = MIMEMultipart()
 mimemsg['From']=mail_from
@@ -19,14 +27,18 @@ mimemsg['To']=mail_to
 mimemsg['Subject']=mail_subject
 mimemsg.attach(MIMEText(mail_body, 'plain'))
 
-with open(mail_attachment, "rb") as attachment:
-    mimefile = MIMEBase('application', 'octet-stream')
-    mimefile.set_payload((attachment).read())
-    encoders.encode_base64(mimefile)
-    mimefile.add_header('Content-Disposition', "attachment; filename= %s" % mail_attachment_name)
-    mimemsg.attach(mimefile)
-    connection = smtplib.SMTP(host='smtp.office365.com', port=587)
-    connection.starttls()
-    connection.login(username,password)
-    connection.send_message(mimemsg)
-    connection.quit()
+# Attaching files
+
+for f in files:
+    file_path = os.path.join(dir_path, f)
+    attachment = MIMEApplication(open(file_path, "rb").read(), _subtype="txt")
+    attachment.add_header('Content-Disposition','attachment', filename=f)
+    mimemsg.attach(attachment)
+
+# Connecting and sending email
+
+connection = smtplib.SMTP(host='smtp.office365.com', port=587)
+connection.starttls()
+connection.login(username,password)
+connection.send_message(mimemsg)
+connection.quit()
