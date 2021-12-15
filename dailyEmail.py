@@ -5,13 +5,13 @@ from email.mime.base import MIMEBase
 from email import encoders
 
 username = "auto@belfieldhomeandleisure.co.uk"
-password = ""
+password = "I1f7UEmx2B*KEx&cjY0YBQx#A@xQrT"
 mail_from = "auto@belfieldhomeandleisure.co.uk"
 mail_to = "matt.jones@stability-it.com"
 mail_subject = "Test Subject"
 mail_body = "This is a test message"
-mail_attachment="https://d1ny9casiyy5u5.cloudfront.net/tmp/test.txt"
-mail_attachment_name="test.txt"
+mail_attachment= "c:\Users\matt.jones\Desktop\test.txt"
+mail_attachment_name= "test.txt"
 
 mimemsg = MIMEMultipart()
 mimemsg['From']=mail_from
